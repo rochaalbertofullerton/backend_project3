@@ -1,0 +1,71 @@
+test_name: Tag
+
+stages:
+  - name: Add an article with a new tag
+    request:
+      url: "http://localhost/tag/Title"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        tag: wise
+    response:
+      status_code: 200
+
+  - name: List all articles with the new tag
+    request:
+      url: "http://localhost/tag/get/Title"
+      auth:
+        - test@email.com
+        - test
+      method: GET
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+
+  - name: Add another tag to the article
+    request:
+      url: "http://localhost/tag/Title"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        tag: wise2
+    response:
+      status_code: 200
+
+
+  - name: Delete one of the tags from the article
+    request:
+      url: "http://localhost/tag/Title"
+      auth:
+        - test@email.com
+        - test
+      method: DELETE
+      headers:
+        content-type: application/json
+      json:
+        tag: wise2
+    response:
+      status_code: 200
+
+  - name: Add a tag to an article that doesn't exist
+    request:
+      url: "http://localhost/tag/The"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        tag: wise2
+    response:
+      status_code: 400

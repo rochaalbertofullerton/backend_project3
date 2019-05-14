@@ -1,0 +1,59 @@
+test_name: Comment
+
+stages:
+  - name: Try to add a comment to an article that doesn't exist
+    request:
+      url: "http://localhost/comment/TheMain"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        comment: FAKE NEWS
+        author: StudentB
+    response:
+      status_code: 400
+
+  - name: Post an anonymous comment on an article
+    request:
+      url: "http://localhost/comment/Thing"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        comment: FAKE NEWS
+        author: StudentB
+    response:
+      status_code: 200
+
+  - name: Post an authenticated comment on an article
+    request:
+      url: "http://localhost/comment/Title"
+      auth:
+        - test@email.com
+        - test
+      method: POST
+      headers:
+        content-type: application/json
+      json:
+        comment: FAKE NEWS
+        author: StudentB
+    response:
+      status_code: 200
+  - name: Get number of comments on a given article
+    request:
+      url: "http://localhost/comment/Thing"
+      auth:
+        - test@email.com
+        - test
+      method: GET
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+  
